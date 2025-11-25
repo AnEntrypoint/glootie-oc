@@ -119,6 +119,27 @@ export const GlootiePlugin = async ({ project, client, $, directory, worktree })
       } else if (event.type === 'session.idle') {
         await runStopHook();
       }
+    },
+    'chat.message': async (input, output) => {
+      console.log('[GLOOTIE] chat.message hook called');
+      const outputs = [];
+      
+      const projectStartMd = path.join(directory, 'start.md');
+      const pluginDir = path.dirname(fileURLToPath(import.meta.url));
+      const pluginStartMd = path.join(pluginDir, 'start.md');
+      
+      let startMdPath = null;
+      if (fs.existsSync(projectStartMd)) {
+        startMdPath = projectStartMd;
+      } else if (fs.existsSync(pluginStartMd)) {
+        startMdPath = pluginStartMd;
+      }
+      
+      if (startMdPath) {
+        const startMdContent = fs.readFileSync(startMdPath, 'utf-8');
+        console.log('[GLOOTIE] Injecting start.md into first message');
+        output.message.content = `${startMdContent}\n\n---\n\n${output.message.content}`;
+      }
     }
   };
 };
