@@ -13,7 +13,7 @@ export const GlootiePlugin = async ({ project, client, $, directory, worktree })
     }
 
     try {
-      const thornsResult = await $`npx mcp-thorns`.timeout(180000).nothrow();
+      const thornsResult = await $`npx mcp-thorns ${directory}`.timeout(180000).nothrow();
       if (thornsResult.exitCode === 0) {
         outputs.push(`=== mcp-thorns ===\n${thornsResult.stdout}`);
       } else {
