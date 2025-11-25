@@ -20,6 +20,8 @@ export const GlootiePlugin = async ({ project, client, $, directory, worktree })
     
     if (startMdPath) {
       const startMdContent = fs.readFileSync(startMdPath, 'utf-8');
+      console.log('[GLOOTIE] Loading start.md from:', startMdPath);
+      console.log('[GLOOTIE] Content length:', startMdContent.length);
       outputs.push(`=== start.md ===\n${startMdContent}`);
     }
 
@@ -47,7 +49,9 @@ export const GlootiePlugin = async ({ project, client, $, directory, worktree })
 
     if (outputs.length > 0) {
       const additionalContext = outputs.join('\n\n');
-      await client.append(additionalContext);
+      console.log('[GLOOTIE] Appending', additionalContext.length, 'chars to session');
+      await client.tui.appendPrompt({ body: { text: additionalContext } });
+      console.log('[GLOOTIE] Append complete');
     }
   };
 
