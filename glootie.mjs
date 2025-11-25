@@ -121,8 +121,7 @@ export const GlootiePlugin = async ({ project, client, $, directory, worktree })
       }
     },
     'chat.message': async (input, output) => {
-      console.log('[GLOOTIE] chat.message hook called');
-      const outputs = [];
+      console.log('[GLOOTIE] chat.message hook called, messageID:', input.messageID);
       
       const projectStartMd = path.join(directory, 'start.md');
       const pluginDir = path.dirname(fileURLToPath(import.meta.url));
@@ -135,10 +134,13 @@ export const GlootiePlugin = async ({ project, client, $, directory, worktree })
         startMdPath = pluginStartMd;
       }
       
-      if (startMdPath) {
+      if (startMdPath && output.parts.length > 0) {
         const startMdContent = fs.readFileSync(startMdPath, 'utf-8');
-        console.log('[GLOOTIE] Injecting start.md into first message');
-        output.message.content = `${startMdContent}\n\n---\n\n${output.message.content}`;
+        console.log('[GLOOTIE] Prepending start.md to parts array');
+        output.parts.unshift({
+          type: 'text',
+          text: `=== start.md ===\n${startMdContent}\n\n---\n\n`
+        });
       }
     }
   };
