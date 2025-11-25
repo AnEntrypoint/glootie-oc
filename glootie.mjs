@@ -20,8 +20,6 @@ export const GlootiePlugin = async ({ project, client, $, directory, worktree })
     
     if (startMdPath) {
       const startMdContent = fs.readFileSync(startMdPath, 'utf-8');
-      console.log('[GLOOTIE] Loading start.md from:', startMdPath);
-      console.log('[GLOOTIE] Content length:', startMdContent.length);
       outputs.push(`=== start.md ===\n${startMdContent}`);
     }
 
@@ -49,9 +47,7 @@ export const GlootiePlugin = async ({ project, client, $, directory, worktree })
 
     if (outputs.length > 0) {
       const additionalContext = outputs.join('\n\n');
-      console.log('[GLOOTIE] Appending', additionalContext.length, 'chars to session');
       await client.tui.appendPrompt({ body: { text: additionalContext } });
-      console.log('[GLOOTIE] Append complete');
     }
   };
 
@@ -118,29 +114,6 @@ export const GlootiePlugin = async ({ project, client, $, directory, worktree })
         await runSessionStartHook();
       } else if (event.type === 'session.idle') {
         await runStopHook();
-      }
-    },
-    'chat.message': async (input, output) => {
-      console.log('[GLOOTIE] chat.message hook called, messageID:', input.messageID);
-      
-      const projectStartMd = path.join(directory, 'start.md');
-      const pluginDir = path.dirname(fileURLToPath(import.meta.url));
-      const pluginStartMd = path.join(pluginDir, 'start.md');
-      
-      let startMdPath = null;
-      if (fs.existsSync(projectStartMd)) {
-        startMdPath = projectStartMd;
-      } else if (fs.existsSync(pluginStartMd)) {
-        startMdPath = pluginStartMd;
-      }
-      
-      if (startMdPath && output.parts.length > 0) {
-        const startMdContent = fs.readFileSync(startMdPath, 'utf-8');
-        console.log('[GLOOTIE] Prepending start.md to parts array');
-        output.parts.unshift({
-          type: 'text',
-          text: `=== start.md ===\n${startMdContent}\n\n---\n\n`
-        });
       }
     }
   };
