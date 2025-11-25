@@ -1,0 +1,24 @@
+{
+  "name": "opencode-glootie-plugin",
+  "version": "1.0.0",
+  "description": "OpenCode plugin with WFGY integration, MCP tools, and automated hooks",
+  "main": "glootie.mjs",
+  "type": "module",
+  "keywords": [
+    "opencode",
+    "opencode-plugin",
+    "wfgy",
+    "mcp",
+    "automation",
+    "glootie"
+  ],
+  "author": "AnEntrypoint",
+  "license": "MIT",
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "dependencies": {
+    "mcp-thorns": "^4.1.0",
+    "wfgy": "^1.0.1"
+  }
+}
