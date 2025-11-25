@@ -2,7 +2,7 @@
   "name": "opencode-glootie-plugin",
   "version": "1.0.0",
   "description": "OpenCode plugin with WFGY integration, MCP tools, and automated hooks",
-  "main": "glootie.mjs",
+  "main": "index.js",
   "type": "module",
   "keywords": [
     "opencode",
