@@ -98,11 +98,12 @@ export const GlootiePlugin = async ({ project, client, $, directory, worktree })
   };
 
   return {
-    'session.created': async () => {
-      await runSessionStartHook();
-    },
-    'session.idle': async () => {
-      await runStopHook();
+    event: async ({ event }) => {
+      if (event.type === 'session.created') {
+        await runSessionStartHook();
+      } else if (event.type === 'session.idle') {
+        await runStopHook();
+      }
     }
   };
 };
