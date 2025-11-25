@@ -1,46 +1,33 @@
-# Glootie OpenCode Plugin
+# MANDATORY DEV WORKFLOW - ABSOLUTE RULES
 
-This plugin provides automated session hooks for OpenCode.
-
-## Features
-
-- **Session Start Hook**: Loads start.md, runs mcp-thorns, runs wfgy hook
-- **Session Idle Hook**: Git sync validation, runs eval scripts
-
-## Hook Pattern
-
-The plugin uses the `event` hook pattern required by OpenCode:
-
-```javascript
-return {
-  event: async ({ event }) => {
-    if (event.type === 'session.created') { ... }
-    else if (event.type === 'session.idle') { ... }
-  }
-};
-```
-
-## File Structure
-
-- `glootie.mjs` - Main plugin logic
-- `index.js` - Entry point that exports GlootiePlugin
-- `package.json` - Package configuration (main: "index.js")
-- `install.sh` - Installation script
-- `README.md` - Documentation
-- `LICENSE` - MIT License
-
-## Testing
-
-To test the plugin:
-
-1. Create a test project with `start.md`
-2. Run `opencode` in the project
-3. Check that start.md content is loaded into session context
-4. Verify session.idle hook runs when session completes
-
-## Troubleshooting
-
-- Plugin must export named function (e.g., `GlootiePlugin`)
-- Plugin must use `event` hook, not direct event names
-- `package.json` must point to correct main file
-- OpenCode loads plugins from `~/.config/opencode/plugin/` or `.opencode/plugin/`
+## Files
+- Maintain permanent structure ONLY - NO ephemeral/temp/mock/simulation files, use glootie mcp and playwright mcp execution instead
+- Single primary working implementations - ZERO failovers/fallbacks ever
+- Errors must fail with brutally clear logs - NEVER hide through failovers
+- ALWAYS Scan codebase before making edits for existing implementations, resolve all duplicate code immediately, NEVER duplicate existing functionality
+- Hard 200-line limit - split files >200 lines BEFORE continuing immediately
+- NO report files - DELETE any non-CHANGELOG/CLAUDE/README/TODO.md files found immdidately
+- Maintain clean/DRY/generalized/forward-thinking architecture, immediately solve arhitetural issues that can be dried up, CONTINUOUSLY reorganize to be maximally concise/simple without losing functionality
+- Check git history for troubleshooting known regressions, dont revert, use differential comparisons and edit the new code manually
+- Every extra symbol = technical debt, enforcing clean short concise functional code is mandatory
+- ALWAYS write dynamic/modular code using ground truth - ZERO hardcoded values
+- NO adjectives/descriptive language in code
+- CLAUDE.md: CONTINUOUSLY/IMMEDIATELY track technical info in realtime (NO progress/changelogs)
+- TODO.md: CONTINUOUSLY track persistent todos - MUST completely clear/empty/delete before stopping - NEVER finish with items remaining
+- CHANGELOG.md: CONTINUOUSLY append concise change summaries
+- Set client-side debugging globals to make ALL client side data accessible via simple repl and use MCP playwright for realtime execution
+- ALWAYS hypothesize/troubleshoot via execution BEFORE editing any files glootie mcp code execution playwright MCP: client debugging/troubleshooting, first ensure that you have working code in execution environments before editing files
+- After changes: use glootie and playwright mcp execute to isolate/debug parts individually
+- troubleshoot and fix ALL issues immediately
+- Ensure NO mocks/simulations/fallbacks/hardcoded/fake elements
+- Keep execution logs concise (<4k chars ideal, 30k max)
+- Clear cache before playwright debugging
+- ONLY persistent background shells for CLI
+- Remove ALL comments immediately when encountered
+- Deploy if deployable/publish if npm if its on npm
+- Clean ALL files not required for the program to function
+- Test locally when possible over live
+- Manual testing ONLY - NO test files
+- Never call pkill, it doesnt work and will end your process
+- Make a comprehensive todo list before initiating any work, manually execute the entire todo list untill its empty
+- never run eval.js manually, it will run automatically at the end of your processes
