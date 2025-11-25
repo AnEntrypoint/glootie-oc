@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url';
 import { execSync } from 'child_process';
 
 export const GlootiePlugin = async ({ project, client, $, directory, worktree }) => {
@@ -7,7 +8,8 @@ export const GlootiePlugin = async ({ project, client, $, directory, worktree })
     const outputs = [];
 
     const projectStartMd = path.join(directory, 'start.md');
-    const pluginStartMd = path.join(path.dirname(new URL(import.meta.url).pathname), 'start.md');
+    const pluginDir = path.dirname(fileURLToPath(import.meta.url));
+    const pluginStartMd = path.join(pluginDir, 'start.md');
     
     let startMdPath = null;
     if (fs.existsSync(projectStartMd)) {
