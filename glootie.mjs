@@ -6,11 +6,17 @@ export const GlootiePlugin = async ({ project, client, $, directory, worktree })
   const runSessionStartHook = async () => {
     const outputs = [];
 
-    let startMdPath = path.join(directory, 'start.md');
-    if (!fs.existsSync(startMdPath)) {
-      startMdPath = path.join(path.dirname(new URL(import.meta.url).pathname), 'start.md');
+    const projectStartMd = path.join(directory, 'start.md');
+    const pluginStartMd = path.join(path.dirname(new URL(import.meta.url).pathname), 'start.md');
+    
+    let startMdPath = null;
+    if (fs.existsSync(projectStartMd)) {
+      startMdPath = projectStartMd;
+    } else if (fs.existsSync(pluginStartMd)) {
+      startMdPath = pluginStartMd;
     }
-    if (fs.existsSync(startMdPath)) {
+    
+    if (startMdPath) {
       const startMdContent = fs.readFileSync(startMdPath, 'utf-8');
       outputs.push(`=== start.md ===\n${startMdContent}`);
     }
