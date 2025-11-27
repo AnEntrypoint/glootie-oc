@@ -18,7 +18,6 @@
     "node": ">=16.0.0"
   },
   "dependencies": {
-    "mcp-thorns": "^4.1.0",
-    "wfgy": "^1.0.1"
+    "mcp-thorns": "^4.1.0"
   }
 }

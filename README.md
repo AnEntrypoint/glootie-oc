@@ -4,17 +4,17 @@ OpenCode plugin that provides automated session hooks for context loading, valid
 
 ## Features
 
-### 🚀 Session Start Hook
+### Session Start Hook
 
 When a new OpenCode session starts, the plugin automatically:
 
-1. **Loads start.md** - Appends project context from `start.md` file
-2. **Runs mcp-thorns** - Executes `npx mcp-thorns` to gather MCP server information (3 min timeout)
-3. **Runs wfgy hook** - Executes `npx wfgy hook` to gather workflow context (3 min timeout)
+1. **Loads start.md** - Appends project context from `start.md` file (checks project root first, then plugin directory)
+2. **Runs mcp-thorns** - Analyzes codebase structure, dead code, dependencies, and architecture
+3. **Loads WFGY spec** - Injects WFGY_Core_OneLine_v2.0 methodology for structured problem-solving
 
 All outputs are automatically appended to the session context.
 
-### ✅ Session Idle Hook
+### Session Idle Hook
 
 When a session becomes idle, the plugin automatically:
 
@@ -121,28 +121,20 @@ console.log('✓ Structure checks passed');
 EOF
 ```
 
-### Optional: Install MCP Tools
-
-```bash
-npm install -g mcp-thorns
-npm install -g wfgy
-```
-
 ## How It Works
 
 The plugin hooks into OpenCode events:
 
 | Event | Trigger | Actions |
 |-------|---------|---------|
-| `session.created` | New session starts | Load start.md, run mcp-thorns, run wfgy hook |
+| `session.created` | New session starts | Load start.md, analyze with mcp-thorns, inject WFGY spec |
 | `session.idle` | Session becomes idle | Git sync check, run eval scripts |
 
 ## Error Handling
 
-- **mcp-thorns/wfgy failures**: Logged but don't block session start (graceful degradation)
+- **mcp-thorns failures**: Logged but don't block session start (graceful degradation)
 - **Git sync issues**: Block session completion with clear error message
 - **Eval failures**: Block session completion with full error output
-- **Timeouts**: All operations have timeouts to prevent hanging
 
 ## Requirements
 
@@ -151,10 +143,13 @@ The plugin hooks into OpenCode events:
 - OpenCode CLI
 
 Optional:
-- `mcp-thorns` (npm package)
-- `wfgy` (npm package)
 - `start.md` file in project root
 - `eval.js` or `evals/*.js` evaluation scripts
+
+## Dependencies
+
+The plugin bundles these dependencies (installed via `npm install`):
+- `mcp-thorns` - Codebase analysis (dead code detection, architecture mapping, dependency graphs)
 
 ## Troubleshooting
 
@@ -205,7 +200,7 @@ This plugin provides equivalent functionality to the Claude Code marketplace plu
 
 | Claude Code Hook | OpenCode Event | Functionality |
 |-----------------|----------------|---------------|
-| SessionStart | session.created | Loads start.md, mcp-thorns, wfgy hook |
+| SessionStart | session.created | Loads start.md, analyzes codebase, injects WFGY spec |
 | Stop | session.idle | Git sync checks, runs eval scripts |
 
 ## License
