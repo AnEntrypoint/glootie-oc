@@ -6,13 +6,13 @@
 - Errors must fail with brutally clear logs - NEVER hide through failovers
 - ALWAYS Scan codebase before making edits for existing implementations, resolve all duplicate code immediately, NEVER duplicate existing functionality
 - Hard 200-line limit - split files >200 lines BEFORE continuing immediately
-- NO report files - DELETE any non-CHANGELOG/CLAUDE/README/TODO.md files found immdidately
+- NO report files - DELETE any non-CHANGELOG/AGENTS/README/TODO.md files found immdidately
 - Maintain clean/DRY/generalized/forward-thinking architecture, immediately solve arhitetural issues that can be dried up, CONTINUOUSLY reorganize to be maximally concise/simple without losing functionality
 - Check git history for troubleshooting known regressions, dont revert, use differential comparisons and edit the new code manually
 - Every extra symbol = technical debt, enforcing clean short concise functional code is mandatory
 - ALWAYS write dynamic/modular code using ground truth - ZERO hardcoded values
 - NO adjectives/descriptive language in code
-- CLAUDE.md: CONTINUOUSLY/IMMEDIATELY track technical info in realtime (NO progress/changelogs)
+- AGENTS.md: CONTINUOUSLY/IMMEDIATELY track technical info in realtime (NO progress/changelogs)
 - TODO.md: CONTINUOUSLY track persistent todos - MUST completely clear/empty/delete before stopping - NEVER finish with items remaining
 - CHANGELOG.md: CONTINUOUSLY append concise change summaries
 - Set client-side debugging globals to make ALL client side data accessible via simple repl and use MCP playwright for realtime execution
