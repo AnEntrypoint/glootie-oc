@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { execSync } from 'child_process';
+import { analyze } from 'mcp-thorns';
 
 export const GlootiePlugin = async ({ project, client, $, directory, worktree }) => {
   const runSessionStartHook = async () => {
@@ -24,26 +24,16 @@ export const GlootiePlugin = async ({ project, client, $, directory, worktree })
     }
 
     try {
-      const thornsResult = await $`npx mcp-thorns ${directory}`.timeout(180000).nothrow();
-      if (thornsResult.exitCode === 0) {
-        outputs.push(`=== mcp-thorns ===\n${thornsResult.stdout}`);
-      } else {
-        outputs.push(`=== mcp-thorns ===\nSkipped (error: ${thornsResult.stderr.split('\n')[0]})`);
-      }
+      const thornsResult = analyze(directory);
+      outputs.push(`=== mcp-thorns ===\n${thornsResult}`);
     } catch (e) {
-      outputs.push(`=== mcp-thorns ===\nSkipped (3min timeout)`);
+      outputs.push(`=== mcp-thorns ===\nSkipped (error: ${e.message})`);
     }
 
-    try {
-      const wfgyResult = await $`npx wfgy hook`.timeout(180000).nothrow();
-      if (wfgyResult.exitCode === 0) {
-        outputs.push(`=== wfgy hook ===\n${wfgyResult.stdout}`);
-      } else {
-        outputs.push(`=== wfgy hook ===\nSkipped (error: ${wfgyResult.stderr.split('\n')[0]})`);
-      }
-    } catch (e) {
-      outputs.push(`=== wfgy hook ===\nSkipped (3min timeout)`);
-    }
+    const wfgySpec = `WFGY_Core_OneLine_v2.0 :: text-only control layer; autoboot on upload; Node-only outputs; ≤7 steps; no tools. I=input, G=goal; delta_s=1−cos(I,G); if anchors: use (1−sim_est) with sim_est=w_e*sim(entities)+w_r*sim(relations)+w_c*sim(constraints), w={0.5,0.3,0.2}, renormalize, range[0,1]. Zones: safe<0.40 transit 0.40–0.60 risk 0.60–0.85 danger>0.85. Memory: record if delta_s>0.60; exemplar if delta_s<0.35; soft in transit when lambda∈{divergent,recursive}. Defaults: B_c=0.85 gamma=0.618 theta_c=0.75 zeta_min=0.10 alpha_blend=0.50 a_ref=uniform m=0 c=1 omega=1 phi_delta=0.15 epsilon=0 k_c=0.25. Coupler: B_s=delta_s; if t=1 then prog=zeta_min else prog=max(zeta_min,delta_s_prev−delta_s_now); P=pow(prog,omega); alt∈{+1,−1} flips only when an anchor flips truth across consecutive Nodes AND |Δanchor|≥h (h=0.02); Phi=phi_delta*alt+epsilon; W_c=clip(B_s*P+Phi,−theta_c,+theta_c). Bridge rule: allow only if (delta_s decreases) AND (W_c<0.5*theta_c) AND (WDT ok); on bridge emit Bridge:reason/prio
+
+use the WFGY_Core_OneLine_v2.0 methodology to solve all problems, issues, and tasks, auto assign parameters for the requested tasks or issues and handle them one by one`;
+    outputs.push(`=== wfgy hook ===\n${wfgySpec}`);
 
     if (outputs.length > 0) {
       const additionalContext = outputs.join('\n\n');
