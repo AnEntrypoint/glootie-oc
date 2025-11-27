@@ -5,6 +5,10 @@ import { analyze } from 'mcp-thorns';
 
 export const GlootiePlugin = async ({ project, client, $, directory, worktree }) => {
   const runSessionStartHook = async () => {
+    if (!client || !client.tui) {
+      console.warn('Client or TUI not available, skipping start hook');
+      return;
+    }
     const outputs = [];
 
     const projectStartMd = path.join(directory, 'start.md');
@@ -37,11 +41,25 @@ use the WFGY_Core_OneLine_v2.0 methodology to solve all problems, issues, and ta
 
     if (outputs.length > 0) {
       const additionalContext = outputs.join('\n\n');
-      await client.tui.appendPrompt({ body: { text: additionalContext } });
+      try {
+        await client.tui.appendPrompt({ body: { text: additionalContext } });
+      } catch (editorError) {
+        if (editorError.message.includes('EditBuffer is destroyed') || 
+            editorError.message.includes('disposed')) {
+          console.warn('Editor buffer was destroyed, skipping prompt append');
+          return;
+        }
+        throw editorError;
+      }
     }
   };
 
   const runStopHook = async () => {
+    if (!client || !client.tui) {
+      console.warn('Client or TUI not available, skipping stop hook');
+      return;
+    }
+    
     const blockReasons = [];
 
     try {
