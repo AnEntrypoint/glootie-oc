@@ -8,15 +8,15 @@
   },
   "files": [
     ".claude-plugin/",
-    "agents/",
     "hooks/",
-    "skills/",
     "README.md",
     "CLAUDE.md",
+    "CHANGELOG.md",
     ".mcp.json",
     "plugin.json",
     "prompt-submit-hook.js",
-    "stop-hook.js"
+    "stop-hook.js",
+    "start.md"
   ],
   "keywords": [
     "claude-code",

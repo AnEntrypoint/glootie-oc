@@ -1,6 +1,35 @@
 ---
 name: code-search
-description: Semantic code search using embeddings - use when exploring unfamiliar code patterns or finding functions by behavior
+description: Search code repositories semantically - use when exploring unfamiliar codebases or finding patterns
 ---
 
-Search code repositories semantically without knowing exact syntax. Query with natural language describing what you're looking for (eg "authentication middleware" or "database connection"). Returns relevant code snippets ranked by semantic similarity.
+# Code Search Skill
+
+Use this skill when you need to explore code, find patterns, or understand how features are implemented.
+
+## When to Use
+
+- Understanding unfamiliar codebases
+- Finding where specific functionality is implemented
+- Discovering naming patterns and conventions
+- Locating related code across files
+- Learning how existing features work
+
+## How It Works
+
+Semantic code search uses embeddings to find relevant code by meaning rather than exact syntax. Describe what you're looking for in natural language.
+
+## Search Examples
+
+Instead of: "find lodash imports"
+Try: "Where are utility functions imported from external packages?"
+
+Instead of: "find error handling"
+Try: "How does the code handle and report failures?"
+
+## Best Practices
+
+- Describe intent, not syntax (code search understands meaning)
+- Start broad, refine if results too wide
+- Look at imports and exports to understand dependencies
+- Check multiple files to see patterns

@@ -5,7 +5,6 @@ const path = require('path');
 const { execSync } = require('child_process');
 
 const projectDir = process.env.CLAUDE_PROJECT_DIR || process.env.GEMINI_PROJECT_DIR || process.env.OC_PROJECT_DIR || process.cwd();
-const verificationFile = path.join(projectDir, '.glootie-stop-verified');
 
 let aborted = false;
 process.on('SIGTERM', () => { aborted = true; });
@@ -13,12 +12,6 @@ process.on('SIGINT', () => { aborted = true; });
 
 const run = () => {
   if (aborted) return { decision: undefined };
-
-  const verificationComplete = fs.existsSync(verificationFile);
-  if (!verificationComplete) {
-    return { decision: undefined };
-  }
-
   let blockReasons = [];
 
   try {
