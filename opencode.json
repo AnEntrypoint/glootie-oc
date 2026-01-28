@@ -2,7 +2,7 @@
   "$schema": "https://opencode.ai/config.json",
   "default_agent": "gm",
   "plugin": {
-    "name": "gm",
+    "name": "glootie",
     "module": "./index.js"
   },
   "mcp": {
