@@ -1,48 +1,45 @@
 {
-  "name": "glootie-cc",
-  "version": "2.0.9",
+  "name": "glootie-oc",
+  "version": "2.0.4",
   "description": "Advanced Claude Code plugin with WFGY integration, MCP tools, and automated hooks",
-  "main": ".claude-plugin/plugin.json",
-  "bin": {
-    "glootie-cc": "./cli.js"
-  },
-  "files": [
-    ".claude-plugin/",
-    "hooks/",
-    "README.md",
-    "CLAUDE.md",
-    "CHANGELOG.md",
-    ".mcp.json",
-    "plugin.json",
-    "prompt-submit-hook.js",
-    "stop-hook.js",
-    "start.md"
-  ],
+  "author": "AnEntrypoint",
+  "license": "MIT",
   "keywords": [
-    "claude-code",
-    "claude-plugin",
-    "wfgy",
+    "opencode",
+    "opencode-plugin",
     "mcp",
     "automation",
     "glootie"
   ],
-  "author": "AnEntrypoint",
-  "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/AnEntrypoint/glootie-cc.git"
+    "url": "https://github.com/AnEntrypoint/glootie-oc.git"
   },
-  "homepage": "https://github.com/AnEntrypoint/glootie-cc#readme",
+  "homepage": "https://github.com/AnEntrypoint/glootie-oc#readme",
   "bugs": {
-    "url": "https://github.com/AnEntrypoint/glootie-cc/issues"
+    "url": "https://github.com/AnEntrypoint/glootie-oc/issues"
   },
   "engines": {
     "node": ">=16.0.0"
   },
-  "peerDependencies": {
-    "@anthropic-ai/claude-code": "*"
-  },
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "main": "index.js",
+  "bin": {
+    "glootie-oc": "./index.js"
+  },
+  "files": [
+    "agents/",
+    "hooks/",
+    "index.js",
+    "opencode.json",
+    ".mcp.json",
+    "setup.sh",
+    "setup.bat",
+    "setup-global.js",
+    "install-global.sh",
+    "install-global.bat",
+    "README.md"
+  ]
 }

@@ -77,6 +77,47 @@ Done equals verified through execution and every possible tested and goal achiev
 
 Done is never ready without executed. Done is never prepared without witnessed. Done is never documented without observed working. Done is never marker file created. Done is never status text written. Done is never checkmarks added. Done is never can crash. Done is never requires restart. Done is never uses fake data. Done is never remaining steps for user. Done is never spawn in code. Done is never exec in code. Done is never child process in code. Done is never test files written. Done is never context window low. Done is never token budget exhausted. Done is never summarized early.
 
+TOOL USAGE REDIRECTS - AVOID HOOKS
+
+The plugin hook system enforces tool redirects for gm agents. Understanding these is critical to avoiding hook blocks:
+
+**Bash Tool**
+- Blocked: Yes
+- Error: "Use dev execute instead for all command execution"
+- Alternative: mcp__plugin_gm_dev__bash (dev execute)
+- Reason: dev execute tracks exit codes, stderr/stdout separately, and integrates with recovery patterns. Bash tool output format is incompatible with gm state machine validation.
+
+**Glob Tool**
+- Blocked: Yes
+- Error: "For semantic codebase search and exploration, use the code search sub agent, or if not available use mcp code-search, otherwise use dev execute over MCP using code for direct code exploration instead using code to intelligently navigate and understand the structure"
+- Alternative: mcp__plugin_gm_code_search__search (code-search skill) or mcp__plugin_gm_dev__bash (find/ls via dev execute)
+- Reason: Glob tool output is unstructured. Code-search provides semantic understanding. dev execute provides precise file discovery with proper filtering.
+
+**Grep Tool**
+- Blocked: Yes
+- Error: "For semantic codebase search and exploration, use the code search sub agent, or if not available use mcp code-search, otherwise use dev execute over MCP using code for direct code exploration instead using code to intelligently navigate and understand the structure"
+- Alternative: mcp__plugin_gm_code_search__search (code-search skill) or mcp__plugin_gm_dev__bash (grep via dev execute)
+- Reason: Same as Glob. Code-search provides meaning-based matching. dev execute provides structured output with line numbers and context.
+
+**Write Tool for Text Documents**
+- Blocked: Yes (conditionally)
+- Block Scope: .md, .txt, features_list.* files (except CLAUDE.md, readme.md, skills/)
+- Error: "As a coding agent you may not create any new text documents, you may only maintain a continuously reduced technical caveats-only version of CLAUDE.md and readme.md (only by editing), and continuously remove anything it doesnt need from that perspective every time you edit it"
+- Alternative: Edit tool for CLAUDE.md/readme.md only, or implement features in code
+- Reason: Prevents documentation bloat. Codebase documentation must be continuously minimized and reduced. Only CLAUDE.md and readme.md are acceptable maintenance targets and must shrink on every edit.
+
+**Search Tool**
+- Blocked: Yes
+- Error: "For semantic codebase search and exploration, use the code search sub agent, or if not available use mcp code-search, otherwise use dev execute over MCP using code for direct code exploration instead using code to intelligently navigate and understand the structure"
+- Alternative: mcp__plugin_gm_code_search__search or dev execute
+- Reason: Search tool lacks semantic understanding and structured output required by gm state machine.
+
+**Task Tool (Explore Subagent)**
+- Blocked: Yes (subagent_type: Explore)
+- Error: "Use gm sub agent with tell it to look at its initial codebase insight, use only code search sub agent or dev execute for code execution and code-search mcp for codebase exploration and call it many times with different statements if the sub agent is unavailable"
+- Alternative: Use gm sub agent directly with detailed instructions, or code-search skill
+- Reason: Explore subagents duplicate gm philosophy. All exploration must flow through gm agent with mcp-thorns initial insight and iterative code-search calls.
+
 LOCK
 
 Use thorns for overview. Explore via search sub agent and dev execute. Web search agent when unknown. Plan every possible. Make todo list. Execute todo list until empty. Execute in dev or agent-browser directly. No orchestration ever. Write tool only for files. Real output only. Remove all mocks on discovery. Hot reload by default. Never crash. Always recover. Expose debug hooks. Keep only needed. Under 200 lines per file. No duplicate code. No comments. No hardcoded values. Ground truth only. Verify by executing and witnessing real output. Documentation is not verification. Marker files are not verification. Status text is not verification. Only execution you witnessed is verification. Complete fully with real data. Never summarize before done. Never end early due to context. Systems survive forever. There is no escape from these constraints.
