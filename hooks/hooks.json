@@ -7,7 +7,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node ${GLOOTIE_ROOT}/pre-tool-use-hook.js",
+            "command": "node ${__dirname}/pre-tool-use-hook.js",
             "timeout": 3600
           }
         ]
@@ -19,7 +19,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node ${GLOOTIE_ROOT}/session-start-hook.js",
+            "command": "node ${__dirname}/session-start-hook.js",
             "timeout": 10000
           }
         ]
@@ -31,7 +31,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node ${GLOOTIE_ROOT}/prompt-submit-hook.js",
+            "command": "node ${__dirname}/prompt-submit-hook.js",
             "timeout": 3600
           }
         ]
@@ -43,12 +43,12 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node ${GLOOTIE_ROOT}/stop-hook.js",
+            "command": "node ${__dirname}/stop-hook.js",
             "timeout": 300000
           },
           {
             "type": "command",
-            "command": "node ${GLOOTIE_ROOT}/stop-hook-git.js",
+            "command": "node ${__dirname}/stop-hook-git.js",
             "timeout": 60000
           }
         ]
