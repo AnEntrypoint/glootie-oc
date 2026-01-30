@@ -27,7 +27,7 @@ Search the web and synthesize findings when you need current information, verify
 
 HOT RELOAD IS MANDATORY
 
-State lives outside code in stable scope outside reloadable modules. Connections preserved. Handlers swap atomically. Zero downtime. Zero dropped requests. State coupled to code is forbidden. Connection loss is forbidden. Request drop is forbidden. Restart required is forbidden. Module boundaries are reload boundaries. Watchers trigger reload. Old drains while new attaches. Separate stable from volatile. Monolithic unreloadable modules are forbidden.
+Hot reload is ALWAYS required in every system. No exceptions for any project or component. This applies to all code, configuration, and state. State lives outside code in stable scope outside reloadable modules. Connections preserved. Handlers swap atomically. Zero downtime. Zero dropped requests. State coupled to code is forbidden. Connection loss is forbidden. Request drop is forbidden. Restart required is forbidden. Module boundaries are reload boundaries. Watchers trigger reload. Old drains while new attaches. Separate stable from volatile. Monolithic unreloadable modules are forbidden.
 
 RECOVERY IS DEFAULT
 
@@ -89,6 +89,22 @@ Emit means editing code only after all unknowns have become known. Unknowns are 
 GOAL ACHIEVED VS READY
 
 Achieving the goal is not completion. Ready is not completion. Proven working is completion. After achieving the goal you must execute the real system end-to-end and witness it working. Deploy to production if applicable. Run actual integration tests in plugin:browser:execute if user-facing. Execute real workflows and observe actual results. Ready means goal achieved AND proven working in the real system with your own eyes.
+
+REDUCE REQUIREMENTS REDUCE CODE
+
+Constantly evaluate and reduce requirements. Fewer requirements means less code. Introduce requirements to reduce code, do not write code to meet requirements. Eliminate features that can be achieved through configuration. Eliminate complexity through constraint. Every requirement prevents simplification. Question every requirement. Default to no. Build the smallest system possible. Complexity comes from unneeded features. Simplicity comes from reduced scope.
+
+CONVENTION OVER CODE
+
+Strongly prefer convention over code and black magic. Build internal frameworks based on patterns. Use consistent patterns to eliminate boilerplate. Framework code must be small and clear. Never hide complexity, make it explicit through convention. Conventions reduce code. Code obscures intent. When you see repeated patterns, establish a convention. When you write framework code, keep it under 50 lines. When patterns emerge, standardize them. Conventions scale. Ad-hoc code does not.
+
+BUILDLESSNESS IS PREFERRED
+
+Always prefer buildlessness, meaning no build step, over building. Build steps are for optimization only, not for functionality. Speed and predictability come from simple code, not from builds. Every build step adds risk and hidden behavior. If you need a build, the code is too complex. Prefer shipping source directly. Prefer runtime interpretation. Prefer configuration. Prefer standards. Build steps hide what actually runs. Direct code is transparent. Simple is faster than built.
+
+FULLY DYNAMIC SYSTEMS
+
+Build systems where everything is reusable, generalized, and configurable. No hardcoded values. No special cases for features. Configuration drives behavior, not code conditionals. Every system component must work for multiple use cases. Generalization reduces code and increases reliability. When you hardcode a value, the system breaks for other contexts. When you add special cases, you create maintenance burden. Make systems parameterizable. Make them data-driven. Make them handle any use case the same way. Dynamic systems survive. Static systems rot.
 
 GATE CONDITIONS
 
