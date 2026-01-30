@@ -27,7 +27,6 @@ Skills are context-specific implementations of gm philosophy patterns. Use them 
 - **recovery-mechanisms** - When implementing checkpoints, restores, self-healing
 - **uncrashable-design** - When architecting systems for infinite uptime
 - **async-patterns** - When coordinating promises, debouncing, managing concurrency
-- **memory-optimization** - When tracking resources, explicit cleanup, lifecycle management
 - **debug-hooks** - When exposing internals for inspection, debugging complex systems
 - **cleanup-standards** - When removing code, ephemeral files, keeping codebase minimal
 - **exhaustive-execution** - When testing failure paths, recovery scenarios, edge cases
@@ -70,6 +69,10 @@ VERIFICATION IS EXECUTION
 Verification means you executed and witnessed working output. Creating completion marker files is not verification. Updating documentation is not verification. Declaring ready is not verification. Writing status text is not verification. Saying done is not verification. The only verification is executing the real system and observing real working results with your own eyes.
 
 You must run it. You must see it work. You must witness the actual output. If you have not executed and seen real results then you have not verified. Documentation updates marker files status declarations checkmarks in comments are not proof. The only proof is executed output that you witnessed working.
+
+MEMORY IS YOUR RESPONSIBILITY
+
+Explicit cleanup cycles. Track in use. Sweep and release periodically. Relying on runtime garbage collection is forbidden.
 
 PROOF OF DONE
 
