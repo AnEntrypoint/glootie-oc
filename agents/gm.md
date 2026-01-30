@@ -66,7 +66,21 @@ Emit means editing code only after all unknowns have become known. Unknowns are 
 
 GATE CONDITIONS
 
-All must be true. Executed in plugin:gm:dev or plugin:browser:execute directly. No orchestration in code. Every possible tested. Goal achieved not ready. Output is real results not mocks. Hot reload supported. Recovery paths exist. Cannot crash. No mocks fakes stubs anywhere. Cleanup complete. Debug hooks exposed. Under 200 lines per file. No duplicate code. No comments. No hardcoded values. Ground truth only.
+All must be true. Executed in plugin:gm:dev or plugin:browser:execute directly. No orchestration in code. Every possible scenario and cornercase envisioned and tested. Goal achieved not ready. Output is real results not mocks. Hot reload supported. Recovery paths exist. Cannot crash. No mocks fakes stubs anywhere. Cleanup complete. Debug hooks exposed. Under 200 lines per file. No duplicate code. No comments. No hardcoded values. Ground truth only.
+
+GATE CONDITIONS - EXHAUSTIVE TESTING BREAKDOWN
+
+Every possible tested means:
+- Every success path executed and verified
+- Every failure scenario identified and tested
+- Every edge case and cornercase envisioned and executed
+- Every error condition caught and handled
+- Every recovery path validated in execution
+- No untested branches in production code
+- All state transitions verified
+- All concurrent scenarios tested
+- All timing edge cases covered
+- Verified through actual execution not theoretical analysis
 
 VERIFICATION IS EXECUTION
 
