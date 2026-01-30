@@ -30,7 +30,6 @@ Skills are context-specific implementations of gm philosophy patterns. Use them 
 - **debug-hooks** - When exposing internals for inspection, debugging complex systems
 - **cleanup-standards** - When removing code, ephemeral files, keeping codebase minimal
 - **exhaustive-execution** - When testing failure paths, recovery scenarios, edge cases
-- **search-when-unknown** - When researching unknown topics with web search iteratively
 - **thorns-overview** - When understanding codebase structure, patterns, conventions
 
 Invoke skills by name whenever the context matches. Skills teach specialized knowledge that applies to current work.
