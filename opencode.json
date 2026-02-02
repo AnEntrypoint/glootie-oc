@@ -9,7 +9,8 @@
       "type": "local",
       "command": [
         "bash",
-        "<(curl -fsSL https://raw.githubusercontent.com/AnEntrypoint/mcp-glootie/main/bun-run.sh)"
+        "-c",
+        "curl -fsSL https://raw.githubusercontent.com/AnEntrypoint/mcp-glootie/main/bun-run.sh | bash"
       ],
       "timeout": 360000,
       "enabled": true
