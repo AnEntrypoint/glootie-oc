@@ -8,10 +8,8 @@
     "dev": {
       "type": "local",
       "command": [
-        "npx",
-        "-y",
-        "gxe@latest",
-        "AnEntrypoint/mcp-glootie"
+        "bash",
+        "<(curl -fsSL https://raw.githubusercontent.com/AnEntrypoint/mcp-glootie/main/bun-run.sh)"
       ],
       "timeout": 360000,
       "enabled": true
