@@ -1,4 +1,4 @@
-# glootie-oc for OpenCode
+# glootie for OpenCode
 
 ## Installation
 
