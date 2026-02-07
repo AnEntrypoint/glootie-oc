@@ -8,6 +8,7 @@ const isGemini = process.env.GEMINI_PROJECT_DIR !== undefined;
 const shellTools = ['Bash', 'run_shell_command'];
 const writeTools = ['Write', 'write_file'];
 const searchTools = ['Glob', 'Grep', 'glob', 'search_file_content', 'Search', 'search', 'mcp__plugin_gm_code-search__search'];
+const forbiddenTools = ['find', 'Find'];
 
 const run = () => {
   try {
@@ -16,6 +17,10 @@ const run = () => {
     const { tool_name, tool_input } = data;
 
     if (!tool_name) return { allow: true };
+
+    if (forbiddenTools.includes(tool_name)) {
+      return { block: true, reason: 'Use gm:code-search or plugin:gm:dev for semantic codebase search instead of filesystem find' };
+    }
 
     if (shellTools.includes(tool_name)) {
       return { block: true, reason: 'Use dev execute instead for all command execution' };
