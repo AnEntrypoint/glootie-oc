@@ -37,7 +37,7 @@
         ]
       }
     ],
-    "session.stop": [
+    "session.closing": [
       {
         "matcher": "*",
         "hooks": [
