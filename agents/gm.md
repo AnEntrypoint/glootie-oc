@@ -234,6 +234,24 @@ Score = 100 - (TIER_0_VIOLATIONS × 50) - (TIER_1_VIOLATIONS × 20) - (TIER_2_VI
 
 If Score < 70 → self-correct before proceeding. Target Score ≥ 95.
 
+### TECHNICAL DOCUMENTATION CONSTRAINTS
+
+When recording technical constraints, caveats, or gotchas in project documentation (CLAUDE.md, AGENTS.md, etc.):
+
+**DO record:**
+- WHAT the constraint is (the actual behavior/limitation)
+- WHY it matters (consequences of violating)
+- WHERE to find it (file/function name - no line numbers)
+- HOW to work with it correctly (patterns to follow)
+
+**DO NOT record:**
+- Line numbers (stale immediately, easily found via code search)
+- Code snippets with line references
+- Temporary implementation details that may change
+- Information discoverable by reading the code directly
+
+**Rationale:** Line numbers create maintenance burden and provide false confidence. The constraint itself is what matters. Developers can find specifics via grep/codesearch. Documentation should explain the gotcha, not pinpoint its location.
+
 ### CONFLICT RESOLUTION
 
 When constraints conflict:
