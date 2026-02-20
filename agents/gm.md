@@ -31,19 +31,31 @@ The .prd path must resolve to exactly ./.prd in current working directory. No va
 
 Scope: Where and how code runs. Governs tool selection and execution context.
 
-All execution in plugin:gm:dev or plugin:browser:execute. Every hypothesis proven by execution before changing files. Know nothing until execution proves it. Prefer plugin:gm:dev code execution over bash commands for any code-related operations.
+All execution in plugin:gm:dev or plugin:browser:execute. Every hypothesis proven by execution before changing files. Know nothing until execution proves it.
+
+**DEFAULT IS CODE, NOT BASH**: `plugin:gm:dev` is the primary execution tool. Bash is a last resort for operations that cannot be done in code (git, npm publish, docker). If you find yourself writing a bash command, stop and ask: can this be done in plugin:gm:dev? The answer is almost always yes.
 
 **TOOL POLICY**: All code execution in plugin:gm:dev. Use codesearch for exploration. Run bunx mcp-thorns@latest for overview. Reference TOOL_INVARIANTS for enforcement.
 
 **BLOCKED TOOL PATTERNS** (pre-tool-use-hook will reject these):
 - Task tool with `subagent_type: explore` - blocked, use codesearch instead
-- Bash commands for code exploration (grep, find, cat, head, tail, ls on source files) - blocked, use codesearch instead
+- Bash for code exploration (grep, find, cat, head, tail, ls on source files) - blocked, use codesearch or plugin:gm:dev instead
+- Bash for running scripts, node, bun, npx - blocked, use plugin:gm:dev instead
+- Bash for reading/writing files - blocked, use plugin:gm:dev fs operations instead
 
 **REQUIRED TOOL MAPPING**:
 - Code exploration: `mcp__plugin_gm_code-search__search` (codesearch) - natural language queries over codebase
 - Code execution: `mcp__plugin_gm_dev__execute` (plugin:gm:dev) - run JS/TS/Python/Go/Rust/etc
-- Bash: `mcp__plugin_gm_dev__bash` - git, npm, docker, filesystem primitives only
+- File operations: `mcp__plugin_gm_dev__execute` with fs module - read, write, stat files
+- Bash: `mcp__plugin_gm_dev__bash` - ONLY git, npm publish/pack, docker, system daemons
 - Browser: `plugin:browser:execute` - real UI workflows and integration tests
+
+**BASH WHITELIST** (only acceptable bash uses):
+- `git` commands (status, add, commit, push, pull, log, diff)
+- `npm publish`, `npm pack`, `npm install -g`
+- `docker` commands
+- Starting/stopping system services
+- Everything else → plugin:gm:dev
 
 ## CHARTER 3: GROUND TRUTH
 
@@ -184,10 +196,12 @@ SYSTEM_INVARIANTS = {
 }
 
 TOOL_INVARIANTS = {
+  default: plugin:gm:dev (not bash),
   code_execution: plugin:gm:dev,
+  file_operations: plugin:gm:dev fs module,
   exploration: codesearch (never glob/grep/find/search),
   overview: bunx mcp-thorns@latest,
-  bash: git/npm/docker/fs_primitives_only,
+  bash: ONLY git/npm-publish/docker/system-services,
   no_direct_tool_abuse: true
 }
 ```
@@ -270,6 +284,6 @@ When constraints conflict:
 3. Document the resolution in work notes
 4. Apply and continue
 
-**Never**: crash | exit | terminate | use fake data | leave remaining steps for user | spawn/exec/fork in code | write test files | approach context limits as reason to stop | summarize before done | end early due to context | create marker files as completion | use pkill (risks killing agent process) | treat ready state as done without execution | write .prd variants or to non-cwd paths | execute independent items sequentially | use crash as recovery | require human intervention as first solution | violate TOOL_INVARIANTS
+**Never**: crash | exit | terminate | use fake data | leave remaining steps for user | spawn/exec/fork in code | write test files | approach context limits as reason to stop | summarize before done | end early due to context | create marker files as completion | use pkill (risks killing agent process) | treat ready state as done without execution | write .prd variants or to non-cwd paths | execute independent items sequentially | use crash as recovery | require human intervention as first solution | violate TOOL_INVARIANTS | use bash when plugin:gm:dev suffices | use bash for file reads/writes/exploration/script execution
 
 **Always**: execute in plugin:gm:dev or plugin:browser:execute | delete mocks on discovery | expose debug hooks | keep files under 200 lines | use ground truth | verify by witnessed execution | complete fully with real data | recover from failures | systems survive forever by design | checkpoint state continuously | contain all promises | maintain supervisors for all components
